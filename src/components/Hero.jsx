@@ -33,7 +33,7 @@ const Hero = () => {
       {/* Top-right Login button */}
       <div className="fixed right-5 top-5 z-20">
         <a
-          href="/login"
+          href="https://jrgroup.my.id/member"
           className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-4 py-2 text-sm text-white backdrop-blur transition-colors hover:border-[#D4AF37]/60 hover:text-[#D4AF37] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
         >
           <User className="h-4 w-4" />
