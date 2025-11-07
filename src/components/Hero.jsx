@@ -2,6 +2,25 @@ import React, { useState } from 'react';
 import Spline from '@splinetool/react-spline';
 import { User, ArrowRight } from 'lucide-react';
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch() {}
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-400/10 via-indigo-500/10 to-black" />
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function Logo() {
   const [imgError, setImgError] = useState(false);
   if (imgError) {
@@ -31,10 +50,12 @@ export default function Hero() {
     <section className="relative h-screen w-full overflow-hidden bg-black text-white">
       {/* 3D Spline background */}
       <div className="absolute inset-0">
-        <Spline
-          scene="https://prod.spline.design/X4WHt6g0UjCGc3bW/scene.splinecode"
-          style={{ width: '100%', height: '100%' }}
-        />
+        <ErrorBoundary>
+          <Spline
+            scene="https://prod.spline.design/Qe6dlWJktclXcUBS/scene.splinecode"
+            style={{ width: '100%', height: '100%' }}
+          />
+        </ErrorBoundary>
       </div>
 
       {/* Gradient vignette overlay - allow interactions to pass through */}
