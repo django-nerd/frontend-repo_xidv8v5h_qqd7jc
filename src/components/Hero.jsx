@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import Spline from '@splinetool/react-spline';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, User } from 'lucide-react';
 
 const Hero = () => {
   const [showLogoImg, setShowLogoImg] = useState(true);
@@ -29,6 +29,17 @@ const Hero = () => {
 
       {/* Dark overlay for readability; allow Spline interactions through */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#101010]/90" />
+
+      {/* Top-right Login button */}
+      <div className="fixed right-5 top-5 z-20">
+        <a
+          href="/login"
+          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-4 py-2 text-sm text-white backdrop-blur transition-colors hover:border-[#D4AF37]/60 hover:text-[#D4AF37] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+        >
+          <User className="h-4 w-4" />
+          Login
+        </a>
+      </div>
 
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 text-center">
