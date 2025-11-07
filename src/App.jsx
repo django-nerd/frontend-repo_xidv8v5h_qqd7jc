@@ -7,21 +7,22 @@ import Footer from './components/Footer';
 
 export default function App() {
   useEffect(() => {
+    // Smooth scrolling globally
     document.documentElement.style.scrollBehavior = 'smooth';
-  }, []);
 
-  // Attach open modal for Level 0 button after mount
-  useEffect(() => {
-    const section = document.getElementById('courses');
-    if (!section) return;
-    const btn = section.querySelector('button');
-    if (!btn) return;
-    const onClick = (e) => {
-      const dlg = document.getElementById('free-videos');
-      dlg?.showModal?.();
+    // Ensure modal buttons work if present elsewhere
+    const level0Btn = document.getElementById('level0-open');
+    if (level0Btn) {
+      level0Btn.addEventListener('click', () => {
+        const d = document.getElementById('free-videos');
+        if (d && d.showModal) d.showModal();
+      });
+    }
+
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+      if (level0Btn) level0Btn.replaceWith(level0Btn.cloneNode(true));
     };
-    btn.addEventListener('click', onClick);
-    return () => btn.removeEventListener('click', onClick);
   }, []);
 
   return (
