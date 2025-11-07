@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import Spline from '@splinetool/react-spline';
 import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
+  const [showLogoImg, setShowLogoImg] = useState(true);
+
+  const handleCtaClick = useCallback((e) => {
+    // Fire Facebook Pixel AddToCart if available
+    try {
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'AddToCart', { content_name: 'Course Level 1', value: 0.0, currency: 'USD' });
+      }
+    } catch (err) {
+      // fail silently
+    }
+    // Allow normal navigation to proceed
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen w-full bg-[#101010] text-[#F5F5F5] overflow-hidden">
       {/* 3D Spline scene as immersive background */}
-      <div className="absolute inset-0"> 
-        <Spline 
-          scene="https://prod.spline.design/Geb1kGWmIba9zPiH/scene.splinecode" 
+      <div className="absolute inset-0">
+        <Spline
+          scene="https://prod.spline.design/Geb1kGWmIba9zPiH/scene.splinecode"
           style={{ width: '100%', height: '100%' }}
         />
       </div>
@@ -18,9 +32,18 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 text-center">
-        {/* Logo / Wordmark */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-black/30 px-4 py-2 backdrop-blur">
-          <span className="text-sm tracking-widest text-[#D4AF37]">JR AICADEMY</span>
+        {/* Logo / Wordmark (image with graceful fallback to text) */}
+        <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-[#D4AF37]/40 bg-black/30 px-4 py-2 backdrop-blur">
+          {showLogoImg ? (
+            <img
+              src="/logo.png"
+              alt="JR AICADEMY"
+              className="h-8 w-auto"
+              onError={() => setShowLogoImg(false)}
+            />
+          ) : (
+            <span className="text-sm tracking-widest text-[#D4AF37]">JR AICADEMY</span>
+          )}
         </div>
 
         <h1 className="mb-4 max-w-5xl text-4xl font-semibold leading-tight text-[#F5F5F5] sm:text-5xl md:text-6xl">
@@ -30,7 +53,11 @@ const Hero = () => {
           Join the founder-led academy that builds real-world AI masters, not just users.
         </p>
 
-        <a href="#curriculum" className="group inline-flex items-center gap-3 rounded-md bg-[#D4AF37] px-6 py-3 text-[#101010] transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/60">
+        <a
+          href="https://jrgroup.my.id/course-level-1"
+          onClick={handleCtaClick}
+          className="group inline-flex items-center gap-3 rounded-md bg-[#D4AF37] px-6 py-3 text-[#101010] transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/60"
+        >
           Start Your Journey Now
           <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </a>
